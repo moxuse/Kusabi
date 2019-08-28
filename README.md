@@ -2,7 +2,7 @@
 
 ## Clone Repo
 
-When you clone repo, you need do with recursive option to for resolve submodule.
+When you clone repo, you need do with recursive option for to resolve submodule.
 
 ```
 git clone https://github.com/moxuse/Kusabi.git --recursive
