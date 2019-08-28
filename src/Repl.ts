@@ -1,6 +1,6 @@
 import { Port } from "./Types";
 import { createHash } from "crypto";
-import Context from "./Context";
+import Context from "./Yodaka/src/Context";
 
 import livescript from "livescript";
 
