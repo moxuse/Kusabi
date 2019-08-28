@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style type="text/css" media="screen">
+      body {
+        margin: 0;
+        overflow: hidden;
+      }
+      #renderView {
+        background-color: rgba(0, 0, 0, 1);
+        z-index: -1;
+        position: absolute;
+        margin: 0;
+        width: 100%;
+        height: 50%;
+      }
+      .ui {
+        background-color: rgba(220, 0, 0, 0);
+        position: absolute;
+        margin: 0;
+        width: 100%;
+        height: 50%;
+      }
+      #editor {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(220, 0, 0, 0);
+        color: #444;
+      }
+      #post {
+        height: 100%;
+      }
+      #post form {
+        height: 100%;
+      }
+      #post .text-area {
+        margin: 0;
+        width: 100%;
+        height: 100%;
+        color: #666;
+        background-color: rgba(120, 0, 120, 0);
+      }
+    </style>
+  </head>
+  <body>
+    <div id="renderView"></div>
+    <div class="ui">
+      <div id="editor"></div>
+      <div id="post">
+        <form>
+          <textarea class="text-area"></textarea>
+        </form>
+      </div>
+    </div>
+    <script defer src="Main.ts"></script>
+  </body>
+</html>

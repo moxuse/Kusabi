@@ -1,0 +1,22 @@
+{
+  "name": "ace-roy-test",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "moxuse <moxuse@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "node ../parcel/packages/core/parcel-bundler/bin/cli.js -p 3000 src/index.html"
+  },
+  "dependencies": {
+    "ace-min-noconflict": "^1.1.9",
+    "electron": "^6.0.4",
+    "electron-is-dev": "^1.1.0",
+    "file": "^0.2.2",
+    "livescript": "^1.6.0",
+    "modules": "^0.4.0",
+    "three": "^0.107.0"
+  },
+  "devDependencies": {
+    "typescript": "^3.5.3"
+  }
+}
