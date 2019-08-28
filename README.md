@@ -1,5 +1,13 @@
 # Kusabi
 
+## Clone Repo
+
+When you clone repo, you need do with recursive option to for resolve submodule.
+
+```
+git clone https://github.com/moxuse/Kusabi.git --recursive
+```
+
 ## Build
 
 ```
