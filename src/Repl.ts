@@ -32,7 +32,6 @@ class Repl {
   }
 
   execInScriptTag(code: string) {
-    let error = null;
     this.removeScript(this.lastScriptID);
     const script = document.createElement("script");
     this.lastScriptID = this.updateHash();
