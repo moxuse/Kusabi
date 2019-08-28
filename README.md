@@ -3,15 +3,15 @@
 ## Build
 
 ```
-yarn install
+yarn install -g parcel
 
-yarn run build:roy
+yarn
 ```
 
 ## Run
 
 ```
-yarn run dev
+yarn run start
 
 electron ./index.js
 ```

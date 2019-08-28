@@ -1,11 +1,12 @@
 {
-  "name": "ace-roy-test",
-  "version": "1.0.0",
+  "name": "Kusabi",
+  "version": "0.0.1",
   "main": "index.js",
   "author": "moxuse <moxuse@gmail.com>",
   "license": "MIT",
   "scripts": {
-    "dev": "parcel -p 3000 src/index.html --no-source-maps"
+    "staart": "parcel -p 3000 src/index.html --no-source-maps",
+    "dev": "node ../parcel/packages/core/parcel-bundler/bin/cli.js -p 3000 src/index.html"
   },
   "dependencies": {
     "ace-min-noconflict": "^1.1.9",
