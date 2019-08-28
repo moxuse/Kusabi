@@ -10,7 +10,9 @@ class Repl {
   constructor(port: Port) {
     this.lastScriptID = this.updateHash();
 
-    //make context
+    // make context
+    // TODO transfar making context to Yodaka
+    // TODO include prelude in Yodaka
     const c_ = Context(port);
     Object.keys(c_).map(k => {
       console.log(k, "hasbean exported..");
