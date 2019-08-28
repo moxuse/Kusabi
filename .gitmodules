@@ -1,0 +1,3 @@
+[submodule "src/Yodaka"]
+	path = src/Yodaka
+	url = git@github.com:moxuse/Yodaka.git
