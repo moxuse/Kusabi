@@ -10,12 +10,15 @@
   },
   "dependencies": {
     "ace-min-noconflict": "^1.1.9",
+    "child_process": "^1.0.2",
     "electron": "^6.0.4",
     "electron-is-dev": "^1.1.0",
     "file": "^0.2.2",
-    "livescript": "^1.6.0",
     "modules": "^0.4.0",
-    "three": "^0.107.0"
+    "socket.io": "^2.2.0",
+    "socket.io-client": "^2.2.0",
+    "three": "^0.107.0",
+    "typed-event-emitter": "^2.0.0"
   },
   "devDependencies": {
     "typescript": "^3.5.3"

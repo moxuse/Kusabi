@@ -12,6 +12,7 @@ class Editor {
   constructor(port: Port) {
     this.repl = new Repl(port);
     this.init();
+    this.repl.onResponse(this.onResponse.bind(this));
   }
 
   init() {
@@ -31,6 +32,10 @@ class Editor {
     };
   }
 
+  onResponse(message: string) {
+    this.postWindow(message);
+  }
+
   execCompile() {
     if (!this.editor || !this.editor.session) {
       return;
@@ -40,11 +45,11 @@ class Editor {
       var currline = this.editor.getSelectionRange().start.row;
       var wholelinetxt = this.editor.session.getLine(currline);
 
-      const res = this.repl.execInScriptTag(wholelinetxt);
+      this.repl.compile(wholelinetxt);
       // console.log("res....", wholelinetxt, res);
-      if (0 < res.length) {
-        this.postWindow(res);
-      }
+      // if (0 < res.length) {
+      //   this.postWindow(res);
+      // }
     }
   }
 
@@ -52,14 +57,6 @@ class Editor {
     const post = document.querySelector("#post form .text-area");
     post.innerHTML += "\n\n" + msg;
     post.scrollTop = post.scrollHeight;
-  }
-
-  concat(lines: Array<string>): string {
-    let arr: string = "";
-    for (let line in lines) {
-      arr.concat(line);
-    }
-    return arr;
   }
 
   openFile(file: string) {
