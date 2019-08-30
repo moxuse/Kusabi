@@ -22,6 +22,7 @@ server.on("connection", socket => {
   });
   /**
    * interaction with repl stdio
+   * TODO: Want add repl process like: https://github.com/tidalcycles/atom-tidalcycles/blob/master/lib/repl.js#L54
    */
   psci.stdout.setEncoding("utf-8");
   psci.stdout.on("data", data => {

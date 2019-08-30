@@ -1,16 +1,14 @@
 require("ace-min-noconflict");
 require("ace-min-noconflict/mode-javascript");
 
-import { Port } from "./Types";
 import Repl from "./Repl";
 
 class Editor {
   editor = ace.edit("editor");
   repl: Repl;
-  port: Port;
 
-  constructor(port: Port) {
-    this.repl = new Repl(port);
+  constructor() {
+    this.repl = new Repl();
     this.init();
     this.repl.onResponse(this.onResponse.bind(this));
   }
