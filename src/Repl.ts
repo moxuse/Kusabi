@@ -1,59 +1,45 @@
-import { Port } from "./Types";
-import { createHash } from "crypto";
-import Context from "./Yodaka/src/Context";
+// import { createHash } from "crypto";
+import { EventEmitter } from "typed-event-emitter";
+import io from "socket.io-client";
+const config = require("../config.json");
 
-import livescript from "livescript";
+class Repl extends EventEmitter {
+  private socket: any;
+  private renderView: HTMLIFrameElement;
+  public onResponse = this.registerEvent<(message: string) => any>();
 
-class Repl {
-  lastScriptID: string;
-  port: Port;
-  constructor(port: Port) {
-    this.lastScriptID = this.updateHash();
+  constructor() {
+    super();
+    // this.lastScriptID = this.updateHash();
+    this.renderView = document.getElementById(
+      "renderView"
+    ) as HTMLIFrameElement;
+    this.socket = io("http://localhost:" + config.replSocketPort);
 
-    // make context
-    // TODO transfar making context to Yodaka
-    // TODO include prelude in Yodaka
-    const c_ = Context(port);
-    Object.keys(c_).map(k => {
-      console.log(k, "hasbean exported..");
-      window[k] = c_[k];
-    });
+    this.socket.on("response", this.response.bind(this));
+    this.socket.on("replLoaded", this.onReplReady.bind(this));
   }
 
-  updateHash(): string {
-    return (this.lastScriptID = createHash("md5")
-      .update(Math.random() + "")
-      .digest("hex"));
+  response(message: string) {
+    this.emit(this.onResponse, message);
   }
 
-  livesdcriptCompile(input: string): string {
-    const compiler = livescript["compile"];
-    const res = compiler(input);
-    console.log(res);
-    return res;
+  onReplReady() {
+    console.log("on ready repl");
+    console.log("load render view :: " + config.psciPort);
+    this.renderView.src = "http://localhost:" + config.psciPort;
   }
 
-  execInScriptTag(code: string) {
-    this.removeScript(this.lastScriptID);
-    const script = document.createElement("script");
-    this.lastScriptID = this.updateHash();
-
-    script.id = this.lastScriptID;
-    script.text = this.livesdcriptCompile(code);
-    try {
-      document.body.appendChild(script);
-      return script.text;
-    } catch (e) {
-      return e;
-    }
+  compile(input: string): void {
+    this.socket.emit("repl", input);
   }
 
-  removeScript(hash: string) {
-    const target = document.getElementById(hash);
-    if (target) {
-      document.body.removeChild(target);
-    }
-  }
+  // removeScript(hash: string) {
+  //   const target = document.getElementById(hash);
+  //   if (target) {
+  //     document.body.removeChild(target);
+  //   }
+  // }
 }
 
 export default Repl;

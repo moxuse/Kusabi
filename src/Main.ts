@@ -1,6 +1,5 @@
+import THREE from "three";
 import Editor from "./Editor";
-import RenderView from "./RenderView";
 
-const renderView = new RenderView();
-
-new Editor(renderView.port);
+window.THREE = THREE; //consider this..
+new Editor();

@@ -1,17 +1,16 @@
 require("ace-min-noconflict");
 require("ace-min-noconflict/mode-javascript");
 
-import { Port } from "./Types";
 import Repl from "./Repl";
 
 class Editor {
   editor = ace.edit("editor");
   repl: Repl;
-  port: Port;
 
-  constructor(port: Port) {
-    this.repl = new Repl(port);
+  constructor() {
+    this.repl = new Repl();
     this.init();
+    this.repl.onResponse(this.onResponse.bind(this));
   }
 
   init() {
@@ -31,6 +30,10 @@ class Editor {
     };
   }
 
+  onResponse(message: string) {
+    this.postWindow(message);
+  }
+
   execCompile() {
     if (!this.editor || !this.editor.session) {
       return;
@@ -40,11 +43,7 @@ class Editor {
       var currline = this.editor.getSelectionRange().start.row;
       var wholelinetxt = this.editor.session.getLine(currline);
 
-      const res = this.repl.execInScriptTag(wholelinetxt);
-      // console.log("res....", wholelinetxt, res);
-      if (0 < res.length) {
-        this.postWindow(res);
-      }
+      this.repl.compile(wholelinetxt);
     }
   }
 
@@ -52,14 +51,6 @@ class Editor {
     const post = document.querySelector("#post form .text-area");
     post.innerHTML += "\n\n" + msg;
     post.scrollTop = post.scrollHeight;
-  }
-
-  concat(lines: Array<string>): string {
-    let arr: string = "";
-    for (let line in lines) {
-      arr.concat(line);
-    }
-    return arr;
   }
 
   openFile(file: string) {
