@@ -1,25 +1,34 @@
-var app = require("electron").app;
-var BrowserWindow = require("electron").BrowserWindow;
+const config = require("./config.json");
+const app = require("electron").app;
 
+const BrowserWindow = require("electron").BrowserWindow;
 const path = require("path");
 const isDev = require("electron-is-dev");
 const io = require("socket.io");
-const SOCKET_PORT = 9000;
-const server = io.listen(SOCKET_PORT);
+const server = io.listen(config.replSocketPort);
 const childProcess = require("child_process");
 
-const config = require("./config.json");
-
 let mainWindow = null;
+console.log("load config:", config);
 
 const doSpawn = () => {};
 
 server.on("connection", socket => {
   console.log("client connected");
 
-  const psci = childProcess.spawn(config.psciPath, ["repl"], {
-    shell: true
-  });
+  const psci = childProcess.spawn(
+    config.psciCommand,
+    [
+      config.psciOptions[0],
+      "--",
+      config.psciOptions[1],
+      "--port " + config.psciPort
+    ],
+    {
+      cwd: config.yodakaPath,
+      shell: true
+    }
+  );
   /**
    * interaction with repl stdio
    * TODO: Want add repl process like: https://github.com/tidalcycles/atom-tidalcycles/blob/master/lib/repl.js#L54
@@ -36,7 +45,7 @@ server.on("connection", socket => {
   /**
    * interaction with editor of render process
    */
-  socket.emit("response", "connected server on :: " + SOCKET_PORT);
+  socket.emit("response", "connected server on :: " + config.replSocketPort);
   socket.on("repl", msg => {
     console.log("on exec repl...", msg);
     psci.stdin.write(msg + "\n");

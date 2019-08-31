@@ -1,6 +1,7 @@
-import { createHash } from "crypto";
+// import { createHash } from "crypto";
 import { EventEmitter } from "typed-event-emitter";
 import io from "socket.io-client";
+const config = require("../config.json");
 
 class Repl extends EventEmitter {
   private socket: any;
@@ -9,7 +10,7 @@ class Repl extends EventEmitter {
     super();
     // this.lastScriptID = this.updateHash();
 
-    this.socket = io("http://localhost:9000");
+    this.socket = io("http://localhost:" + config.replSocketPort);
 
     this.socket.on("response", this.response.bind(this));
   }

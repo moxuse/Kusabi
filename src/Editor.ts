@@ -44,10 +44,6 @@ class Editor {
       var wholelinetxt = this.editor.session.getLine(currline);
 
       this.repl.compile(wholelinetxt);
-      // console.log("res....", wholelinetxt, res);
-      // if (0 < res.length) {
-      //   this.postWindow(res);
-      // }
     }
   }
 

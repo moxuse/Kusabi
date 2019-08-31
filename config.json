@@ -1,4 +1,7 @@
 {
-  "psciPath": "spago",
-  "psciPort": 5000
+  "yodakaPath": "src/Yodaka",
+  "psciCommand": "spago",
+  "psciOptions": ["repl", "src/Main"],
+  "psciPort": 9001,
+  "replSocketPort": 9000
 }
