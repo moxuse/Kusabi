@@ -1,12 +1,13 @@
 // import { createHash } from "crypto";
 import { EventEmitter } from "typed-event-emitter";
 import io from "socket.io-client";
+import { watchFile } from "fs";
 const config = require("../config.json");
 
 class Repl extends EventEmitter {
   private socket: any;
   private renderView: HTMLIFrameElement;
-  public onResponse = this.registerEvent<(message: string) => any>();
+  onResponse = this.registerEvent<(message: string) => any>();
 
   constructor() {
     super();
@@ -24,14 +25,23 @@ class Repl extends EventEmitter {
     this.emit(this.onResponse, message);
   }
 
-  onReplReady() {
+  async onReplReady() {
     console.log("on ready repl");
     console.log("load render view :: " + config.psciPort);
     this.renderView.src = "http://localhost:" + config.psciPort;
+    await this.wait(3);
+    this.compile("import Main\n");
+    this.compile("main\n");
   }
 
   compile(input: string): void {
     this.socket.emit("repl", input);
+  }
+
+  async wait(sec) {
+    return new Promise(resolve => {
+      setTimeout(resolve, sec * 1000);
+    });
   }
 
   // removeScript(hash: string) {

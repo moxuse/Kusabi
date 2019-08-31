@@ -73,7 +73,7 @@ app.on("ready", function() {
 
   mainWindow.loadURL(
     isDev
-      ? "http://localhost:3000"
+      ? "http://localhost:" + config.kusabiPort
       : `file://${path.join(__dirname, "/dist/index.html")}`
   );
 
