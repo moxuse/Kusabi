@@ -21,5 +21,5 @@ yarn
 ```
 yarn run start
 
-electron ./index.js
+electron .
 ```

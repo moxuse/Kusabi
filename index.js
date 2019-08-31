@@ -9,14 +9,11 @@ const server = io.listen(config.replSocketPort);
 const childProcess = require("child_process");
 
 let mainWindow = null;
+let psci;
 console.log("load config:", config);
 
-const doSpawn = () => {};
-
-server.on("connection", socket => {
-  console.log("client connected");
-
-  const psci = childProcess.spawn(
+const doSpawn = () => {
+  psci = childProcess.spawn(
     config.psciCommand,
     [
       config.psciOptions[0],
@@ -29,12 +26,21 @@ server.on("connection", socket => {
       shell: true
     }
   );
+};
+
+server.on("connection", socket => {
+  console.log("client connected");
   /**
    * interaction with repl stdio
    * TODO: Want add repl process like: https://github.com/tidalcycles/atom-tidalcycles/blob/master/lib/repl.js#L54
    */
+  doSpawn();
   psci.stdout.setEncoding("utf-8");
   psci.stdout.on("data", data => {
+    console.log("on DATA", data);
+    if (data.indexOf("PSCi, ") >= 0) {
+      socket.emit("replLoaded");
+    }
     socket.emit("response", data);
   });
   psci.stderr.setEncoding("utf-8");
