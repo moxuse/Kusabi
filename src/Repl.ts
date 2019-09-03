@@ -19,7 +19,12 @@ class Repl extends EventEmitter {
     this.socket.on("response", this.response.bind(this));
     this.socket.on("responseError", this.responseError.bind(this));
     // this.socket.on("replLoaded", this.onReplReady.bind(this));
-    console.log("load render view :: " + config.psciPort);
+    console.log(
+      "Loaded Render View\nKusbi Port :: " +
+        config.kusabiPort +
+        "\nRepl Socket Port :: " +
+        config.replSocketPort
+    );
   }
 
   response(message: ArrayBuffer) {

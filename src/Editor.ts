@@ -52,7 +52,6 @@ class Editor {
       const lines = this.editor.getSession().getValue();
       // var currline = this.editor.getSelectionRange().start.row;
       // var wholelinetxt = this.editor.session.getLine(currline);
-
       this.repl.compile(lines);
     }
   }
