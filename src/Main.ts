@@ -1,3 +1,8 @@
 import Editor from "./Editor";
+import RenderView from "./RenderView";
 
-new Editor();
+const renderView = new RenderView();
+new Editor(renderView.port);
+
+// global context
+window.port = renderView.port;

@@ -1,14 +1,15 @@
 require("ace-min-noconflict");
 require("ace-min-noconflict/mode-javascript");
-
+import { Port } from "./Types";
 import Repl from "./Repl";
+import { connect } from "net";
 
 class Editor {
   editor = ace.edit("editor");
   repl: Repl;
 
-  constructor() {
-    this.repl = new Repl();
+  constructor(port: Port) {
+    this.repl = new Repl(port);
     this.init();
     this.repl.onResponse(this.onResponse.bind(this));
   }
@@ -31,7 +32,15 @@ class Editor {
   }
 
   onResponse(message: string) {
-    this.postWindow(message);
+    let text: string = message;
+    if (100 < message.split("\n").length) {
+      let textArr = text.split("\n").slice(0, 10);
+      text = textArr.reduce((a, c) => {
+        return a.concat(c + "\n");
+      });
+      text += " ...";
+    }
+    this.postWindow(text);
   }
 
   execCompile() {
@@ -40,10 +49,11 @@ class Editor {
     }
 
     if (0 < this.editor.session.getRowLength()) {
-      var currline = this.editor.getSelectionRange().start.row;
-      var wholelinetxt = this.editor.session.getLine(currline);
+      const lines = this.editor.getSession().getValue();
+      // var currline = this.editor.getSelectionRange().start.row;
+      // var wholelinetxt = this.editor.session.getLine(currline);
 
-      this.repl.compile(wholelinetxt);
+      this.repl.compile(lines);
     }
   }
 

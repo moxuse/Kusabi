@@ -14,7 +14,6 @@
         height: 50%;
       }
       #renderView {
-        border-style: hidden;
         position: absolute;
         width: 100%;
         height: 100%;
@@ -41,13 +40,13 @@
         background-color: rgba(120, 0, 120, 0);
       }
       .default-texture {
-        /* display: none; */
-        /* opacity: 0; */
+        display: none;
+        opacity: 0;
       }
     </style>
   </head>
   <body>
-    <iframe id="renderView"></iframe>
+    <div id="renderView"></div>
     <div class="ui">
       <div id="editor"></div>
       <div id="post">
@@ -56,11 +55,11 @@
         </form>
       </div>
     </div>
-    <!-- <img
+    <img
       id="default_texture"
       class="default-texture"
       src="images/noise_texture.jpg"
-    /> -->
+    />
     <script defer src="Main.ts"></script>
   </body>
 </html>

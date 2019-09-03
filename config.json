@@ -1,8 +1,12 @@
 {
   "yodakaPath": "src/Yodaka",
-  "psciCommand": "spago",
-  "psciOptions": ["repl", "src/Main"],
+  "spagoCommand": "spago bundle-app -s -n",
+  "spagoOptions": {
+    "targetFile": "index.js",
+    "mainPath": "src/Main",
+    "bundlePath": "./Bundle.purs"
+  },
+  "timeout": 1000,
   "kusabiPort": 3000,
-  "psciPort": 9001,
   "replSocketPort": 9000
 }

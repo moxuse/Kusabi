@@ -1,41 +1,68 @@
 // import { createHash } from "crypto";
 import { EventEmitter } from "typed-event-emitter";
 import io from "socket.io-client";
-import { watchFile } from "fs";
+import { createHash } from "crypto";
+import { Port } from "./Types";
 const config = require("../config.json");
 
 class Repl extends EventEmitter {
   private socket: any;
-  private renderView: HTMLIFrameElement;
+  private lastScriptID: string;
+  public port: Port;
   onResponse = this.registerEvent<(message: string) => any>();
 
-  constructor() {
+  constructor(port: Port) {
     super();
-    // this.lastScriptID = this.updateHash();
-    this.renderView = document.getElementById(
-      "renderView"
-    ) as HTMLIFrameElement;
+    this.lastScriptID = this.updateHash();
     this.socket = io("http://localhost:" + config.replSocketPort);
 
     this.socket.on("response", this.response.bind(this));
-    this.socket.on("replLoaded", this.onReplReady.bind(this));
+    this.socket.on("responseError", this.responseError.bind(this));
+    // this.socket.on("replLoaded", this.onReplReady.bind(this));
+    console.log("load render view :: " + config.psciPort);
   }
 
-  response(message: string) {
+  response(message: ArrayBuffer) {
+    const decoder = new TextDecoder("utf8");
+    const encoded = decoder.decode(new Uint8Array(message));
+    this.emit(this.onResponse, encoded);
+    this.execInScriptTag(encoded);
+  }
+
+  responseError(message: string) {
+    console.log("on response...");
     this.emit(this.onResponse, message);
   }
 
-  async onReplReady() {
-    console.log("on ready repl");
-    console.log("load render view :: " + config.psciPort);
-    this.renderView.src = "http://localhost:" + config.psciPort;
-    await this.wait(3);
-    this.compile("import Main\n");
-    this.compile("main\n");
-  }
+  // async onReplReady() {
+  // console.log("on ready repl");
+  // console.log("load render view :: " + config.psciPort);
+  // this.renderView.src = "http://localhost:" + config.psciPort;
+  // await this.wait(3);
+  // }
 
   compile(input: string): void {
     this.socket.emit("repl", input);
+  }
+
+  updateHash(): string {
+    return (this.lastScriptID = createHash("md5")
+      .update(Math.random() + "")
+      .digest("hex"));
+  }
+
+  execInScriptTag(code: string) {
+    this.removeScript(this.lastScriptID);
+    const script = document.createElement("script");
+    this.lastScriptID = this.updateHash();
+
+    script.id = this.lastScriptID;
+    script.text = code;
+    try {
+      document.body.appendChild(script);
+    } catch (e) {
+      return e;
+    }
   }
 
   async wait(sec) {
@@ -44,12 +71,12 @@ class Repl extends EventEmitter {
     });
   }
 
-  // removeScript(hash: string) {
-  //   const target = document.getElementById(hash);
-  //   if (target) {
-  //     document.body.removeChild(target);
-  //   }
-  // }
+  removeScript(hash: string) {
+    const target = document.getElementById(hash);
+    if (target) {
+      document.body.removeChild(target);
+    }
+  }
 }
 
 export default Repl;
