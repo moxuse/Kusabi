@@ -1,4 +1,3 @@
-// import { createHash } from "crypto";
 import { EventEmitter } from "typed-event-emitter";
 import io from "socket.io-client";
 import { createHash } from "crypto";
@@ -38,13 +37,6 @@ class Repl extends EventEmitter {
     console.log("on response...");
     this.emit(this.onResponse, message);
   }
-
-  // async onReplReady() {
-  // console.log("on ready repl");
-  // console.log("load render view :: " + config.psciPort);
-  // this.renderView.src = "http://localhost:" + config.psciPort;
-  // await this.wait(3);
-  // }
 
   compile(input: string): void {
     this.socket.emit("repl", input);

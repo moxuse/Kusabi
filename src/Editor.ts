@@ -2,7 +2,6 @@ require("ace-min-noconflict");
 require("ace-min-noconflict/mode-javascript");
 import { Port } from "./Types";
 import Repl from "./Repl";
-import { connect } from "net";
 
 class Editor {
   editor = ace.edit("editor");

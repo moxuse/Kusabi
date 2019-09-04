@@ -7,7 +7,6 @@ const isDev = require("electron-is-dev");
 const io = require("socket.io");
 const server = io.listen(config.replSocketPort);
 const exec = require("child_process").exec;
-const { watch } = require("fs");
 const fs = require("fs");
 const appendFile = require("fs").appendFile;
 
@@ -56,9 +55,9 @@ try {
 
 console.log("Yodaka dir", path.join(process.cwd(), "/" + config.yodakaPath));
 const bundleCompileFile = code => {
-  cleanMain();
   prapareFile();
-  const addingCode = code + "\n";
+  const indented = indentation(code);
+  const addingCode = indented + "\n";
   appendFile(mainFile, addingCode, err => {
     if (err) throw err;
     console.log("Writen Main Correctly");
@@ -98,6 +97,19 @@ const doCompile = (socket, code) => {
       resolve();
     });
   });
+};
+
+const indentation = text => {
+  let text_ = text.split("\n");
+  let splited = ["  \n"].concat(text_);
+  const final = splited.reduce((p, c, i) => {
+    if (i == 0) {
+      return p.concat(c + "\n");
+    } else {
+      return p.concat("  " + c + "\n");
+    }
+  });
+  return final;
 };
 
 server.on("connection", socket => {

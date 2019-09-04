@@ -1,6 +1,6 @@
 {
   "yodakaPath": "src/Yodaka",
-  "spagoCommand": "spago bundle-app -s -n",
+  "spagoCommand": "spago bundle-app -n",
   "spagoOptions": {
     "targetFile": "index.js",
     "mainPath": "src/Main",
