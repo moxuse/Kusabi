@@ -51,14 +51,21 @@ class RenderView {
       0.1,
       1000
     );
-    this.cameraForRenderTargets = new OrthographicCamera(-1, -1, 1, 1, 0.1, 20);
-    this.camera.position.set(0, 0, 10);
-    this.cameraForRenderTargets.position.set(0, 0, 20);
+    this.cameraForRenderTargets = new OrthographicCamera(
+      -1.0,
+      -1.0,
+      1.0,
+      1.0,
+      0.1,
+      100
+    );
+    this.camera.position.set(0, 0, 5);
+    this.cameraForRenderTargets.position.set(0, 0, 4);
 
     this.scene.background = new Color(0xffffff);
 
     this.intiLight();
-    return { renderers: [], scene: this.scene };
+    return { targets: [], scene: this.scene };
   }
 
   intiLight() {
@@ -83,17 +90,15 @@ class RenderView {
   }
 
   render() {
-    // this.renderer.setClearColor(new Color(0x000000), 1.0);
-    if (0 < this.port.renderers.length) {
-      for (let current of this.port.renderers) {
+    if (window.port && 0 < window.port.targets.length) {
+      for (let current of window.port.targets) {
+        this.renderer.setClearColor(new Color(0x000000), 1.0);
         this.renderer.setRenderTarget(current.target);
         this.renderer.render(current.scene, this.cameraForRenderTargets);
-
-        // this.renderer.setClearColor(new Color(0x000000), 1.0);
-        // this.renderer.render(current.scene, this.camera);
       }
     }
-
+    this.renderer.setRenderTarget(null);
+    // this.renderer.extensions.get("EXT_color_buffer_float");
     this.renderer.setClearColor(new Color(0x000000), 1.0);
     this.renderer.render(this.scene, this.camera);
   }
@@ -101,9 +106,11 @@ class RenderView {
   animate() {
     this.scene.rotation.x += 0.005;
     this.scene.rotation.y += 0.005;
-    for (let current of this.port.renderers) {
-      current.scene.rotation.x += 0.005;
-      current.scene.rotation.y += 0.005;
+    if (window.port && 0 < window.port.targets.length) {
+      for (let current of window.port.targets) {
+        current.scene.rotation.x += 0.005;
+        current.scene.rotation.y += 0.005;
+      }
     }
     this.render();
     requestAnimationFrame(this.animate.bind(this));
