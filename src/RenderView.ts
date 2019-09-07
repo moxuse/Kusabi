@@ -1,13 +1,16 @@
 import { Port } from "./Types";
 import {
   Scene,
+  Object3D,
   PerspectiveCamera,
   OrthographicCamera,
   WebGLRenderingContext,
   WebGLRenderer,
   AmbientLight,
   PointLight,
-  Color
+  Color,
+  PCFShadowMap,
+  DirectionalLight
 } from "three";
 import { WEBGL } from "three/examples/jsm/WebGL.js";
 
@@ -15,6 +18,7 @@ class RenderView {
   private camera: PerspectiveCamera;
   private cameraForRenderTargets: OrthographicCamera;
   private scene: Scene = new Scene();
+  private rotateScene: Object3D = new Object3D();
   private renderer: WebGLRenderer;
   private width: number;
   private height: number;
@@ -42,15 +46,13 @@ class RenderView {
     this.renderer = new WebGLRenderer({ canvas: canvas, context: context });
     this.renderer.setSize(this.width, this.height);
     this.renderer.setPixelRatio(window.devicePixelRatio);
+    // this.renderer.shadowMapCullFace = CullFaceBack;
+    this.renderer.shadowMap.enabled = true;
+    // this.renderer.shadowMap.type = PCFShadowMap;
 
     el.appendChild(this.renderer.domElement);
 
-    this.camera = new PerspectiveCamera(
-      50,
-      this.width / this.height,
-      0.1,
-      1000
-    );
+    this.camera = new PerspectiveCamera(50, this.width / this.height, 0.1, 100);
     this.cameraForRenderTargets = new OrthographicCamera(
       -1.0,
       -1.0,
@@ -64,8 +66,10 @@ class RenderView {
 
     this.scene.background = new Color(0xffffff);
 
+    this.scene.add(this.rotateScene);
+
     this.intiLight();
-    return { targets: [], scene: this.scene };
+    return { targets: [], scene: this.rotateScene };
   }
 
   intiLight() {
@@ -73,20 +77,24 @@ class RenderView {
     ambientLight.tag = "light";
     this.scene.add(ambientLight);
 
+    var directionalLight = new DirectionalLight(0xffffff, 0.5);
+    directionalLight.castShadow = true;
+    directionalLight.tag = "light";
+    this.scene.add(directionalLight);
+
     let lights = [];
     lights[0] = new PointLight(0xffffff, 1, 0);
+    lights[0].castShadow = true;
+    lights[0].shadowDarkness = 0.5;
+    lights[0].shadow.camera.near = 0.001;
+    lights[0].shadow.camera.far = 50;
     lights[1] = new PointLight(0xffffff, 1, 0);
-    lights[2] = new PointLight(0xffffff, 1, 0);
     lights[0].tag = "light";
     lights[1].tag = "light";
-    lights[2].tag = "light";
-
-    lights[0].position.set(0, 200, 0);
-    lights[1].position.set(100, 200, 100);
-    lights[2].position.set(-100, -200, -100);
+    lights[0].position.set(0, 25, 0);
+    lights[1].position.set(-25, -30, -25);
     this.scene.add(lights[0]);
     this.scene.add(lights[1]);
-    this.scene.add(lights[2]);
   }
 
   render() {
@@ -104,13 +112,13 @@ class RenderView {
   }
 
   animate() {
-    this.scene.rotation.x += 0.005;
-    this.scene.rotation.y += 0.005;
+    this.rotateScene.rotation.x += 0.005;
+    this.rotateScene.rotation.y += 0.005;
     if (window.port && 0 < window.port.targets.length) {
-      for (let current of window.port.targets) {
-        current.scene.rotation.x += 0.005;
-        current.scene.rotation.y += 0.005;
-      }
+      // for (let current of window.port.targets) {
+      //   current.scene.rotation.x += 0.005;
+      //   current.scene.rotation.y += 0.005;
+      // }
     }
     this.render();
     requestAnimationFrame(this.animate.bind(this));

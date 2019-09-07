@@ -8,5 +8,5 @@ import { Scene, Mesh, Texture, Object3D, WebGLRenderTarget } from "three";
 
 export type Port = {
   scene: Scene;
-  targets: Array<{ target: WebGLRenderTarget; scene: Scene }>;
+  targets: Array<{ target: WebGLRenderTarget; scene: Object3D }>;
 };
