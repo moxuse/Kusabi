@@ -18,7 +18,7 @@ When you need to clone repo with recursive option for to resolve submodule Yodak
 git clone https://github.com/moxuse/Kusabi.git --recursive
 ```
 
-## Spago PureScript packaga manager
+## Spago PureScript package manager
 
 Kusabi depends PureScript build system and package managment system on [Spago](https://github.com/spacchetti/spago).
 
