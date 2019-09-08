@@ -22,10 +22,10 @@ git clone https://github.com/moxuse/Kusabi.git --recursive
 
 Kusabi depends PureScript package managment system on [Spago](https://github.com/spacchetti/spago) and its build system.
 
-Spago could install with npm ro yarn.
+Spago could install with npm.
 
 ```
-yarn add -g spago
+npm i -g spago
 ```
 
 ## Build
