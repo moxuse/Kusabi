@@ -48,7 +48,7 @@ in another command prompt,
 electron .
 ```
 
-The Kusabi editor window will launch.
+Kusabi's editor window will launch.
 
 ## Test Environment
 
