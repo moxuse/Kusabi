@@ -8,7 +8,7 @@ PureScript functions for using in Kusabi appication. It helps composing threejs 
 
 For more details, see [README of Yodaka's erpo](https://github.com/moxuse/Yodaka)
 
-# Install Kusabi
+# Install
 
 ## Clone Repo
 
