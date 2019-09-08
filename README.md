@@ -25,7 +25,7 @@ Kusabi depends PureScript package managment system on [Spago](https://github.com
 Spago could install with npm ro yarn.
 
 ```
-npm install -g spago
+yarn add -g spago
 ```
 
 ## Build
