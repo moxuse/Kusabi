@@ -1,16 +1,12 @@
 # Kusabi
 
-Kusabi is the project that aiming to build an application that provides try and error environment for building 3D graphics in WebGL quickly.
-
-Kusabi takes advantage of [PureScript AltJS](http://www.purescript.org) and [Threejs](https://threejs.org) the library for WebGL. You compose graphic with PureScript functions pro
-
-Kusabi consists of the editor, render view and communication with PureScript compiling process.
+Kusabi is the project that aiming to build an application that provides try and error environment for building 3D graphics in WebGL quickly. Kusabi takes advantage of [PureScript](http://www.purescript.org) AltJS and [Threejs](https://threejs.org) the library for WebGL. Kusabi consists of editor, render view and communication way of PureScript compiling process with. Compose graphics by PureScript functions, you can get rendering result in render view repetitive.
 
 ## Yodaka
 
-PureScript functions for using in Kusabi appication. It helps compose threejs objects.
+PureScript functions for using in Kusabi appication. It helps composing threejs rendering.
 
-For more detailed informaitions, see [README of Yodaka's erpo](https://github.com/moxuse/Yodaka)
+For more details, see [README of Yodaka's erpo](https://github.com/moxuse/Yodaka)
 
 # Install Kusabi
 
