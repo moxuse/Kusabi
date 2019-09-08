@@ -6,7 +6,7 @@ Kusabi is the project that aiming to build an application that provides try and 
 
 PureScript functions for using in Kusabi appication. It helps composing threejs rendering.
 
-For more details, see [README of Yodaka's erpo](https://github.com/moxuse/Yodaka)
+For more details, see [README of Yodaka's repo](https://github.com/moxuse/Yodaka)
 
 # Install
 
