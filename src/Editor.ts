@@ -2,15 +2,19 @@ require("ace-min-noconflict");
 require("ace-min-noconflict/mode-javascript");
 import { Port } from "./Types";
 import Repl from "./Repl";
+import RenderView from "./RenderView";
 
 class Editor {
   editor = ace.edit("editor");
+  renderView: RenderView;
   repl: Repl;
 
-  constructor(port: Port) {
-    this.repl = new Repl(port);
+  constructor(renderView: RenderView) {
+    this.repl = new Repl(renderView.port);
+    this.renderView = renderView;
     this.init();
     this.repl.onResponse(this.onResponse.bind(this));
+    this.repl.onResponseError(this.onResponseError.bind(this));
   }
 
   init() {
@@ -39,7 +43,12 @@ class Editor {
       });
       text += " ...";
     }
+    this.renderView.cleanPort();
     this.postWindow(text);
+  }
+
+  onResponseError(message: string) {
+    this.postWindow(message);
   }
 
   execCompile() {

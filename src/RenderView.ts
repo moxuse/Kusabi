@@ -10,7 +10,8 @@ import {
   PointLight,
   Color,
   PCFShadowMap,
-  DirectionalLight
+  DirectionalLight,
+  WebGLRenderTarget
 } from "three";
 import { WEBGL } from "three/examples/jsm/WebGL.js";
 
@@ -122,6 +123,42 @@ class RenderView {
     }
     this.render();
     requestAnimationFrame(this.animate.bind(this));
+  }
+
+  public cleanPort() {
+    for (let trg of window.port.targets) {
+      this.cleanScen(trg.scene);
+      trg.scene = null;
+      this.cleanRenderTarget(trg.target);
+      const index = window.port.targets.indexOf(trg);
+      window.port.targets.splice(index, 1);
+    }
+    this.cleanScen(window.port.scene);
+  }
+
+  cleanRenderTarget(target: WebGLRenderTarget) {
+    // console.log("clean 3", target);
+    target.dispose();
+    target = null;
+  }
+
+  cleanScen(scene: Scene) {
+    // console.log("clean 4", scene);
+    if (!scene) {
+      return;
+    }
+    for (var i = 0; i < scene.children.length; i++) {
+      // console.log("clean 5", scene.children[i]);
+      if ("light" != scene.children[i].tag) {
+        if (scene.children[i].material.map) {
+          scene.children[i].material.map.dispose();
+        }
+        scene.children[i].material.dispose();
+        // console.log("clean 6", scene.children[i]);
+        scene.children[i].geometry.dispose();
+        scene.remove(scene.children[i]);
+      }
+    }
   }
 }
 

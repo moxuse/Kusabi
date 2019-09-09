@@ -9,6 +9,7 @@ class Repl extends EventEmitter {
   private lastScriptID: string;
   public port: Port;
   onResponse = this.registerEvent<(message: string) => any>();
+  onResponseError = this.registerEvent<(message: string) => any>();
 
   constructor(port: Port) {
     super();
@@ -35,7 +36,7 @@ class Repl extends EventEmitter {
 
   responseError(message: string) {
     console.log("on response...");
-    this.emit(this.onResponse, message);
+    this.emit(this.onResponseError, message);
   }
 
   compile(input: string): void {
