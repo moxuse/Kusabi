@@ -45,7 +45,7 @@ yarn run start
 in another command prompt,
 
 ```
-electron .
+yarn run electron
 ```
 
 Kusabi's editor window will launch.
