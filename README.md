@@ -28,6 +28,10 @@ Spago could install with npm.
 npm i -g spago
 ```
 
+Then execute `spago` command and make sure that installed correctly.
+
+If you installed to other directory, you can customize it by `spagoCommand` setting in `config.json`.
+
 ## Build
 
 ```
