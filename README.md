@@ -54,6 +54,16 @@ yarn run electron
 
 Kusabi's editor window will launch.
 
+
+## Execute Code
+
+Upper half of the window is editor view. Write code and execute whole lines by `Ctrl + R` key.
+
+```
+add $ torus {}
+```
+
+
 ## Test Environment
 
 Mac OSX version :: 10.14.8
