@@ -107,7 +107,7 @@ class RenderView {
       }
     }
     this.renderer.setRenderTarget(null);
-    // this.renderer.extensions.get("EXT_color_buffer_float");
+
     this.renderer.setClearColor(new Color(0x000000), 1.0);
     this.renderer.render(this.scene, this.camera);
   }
