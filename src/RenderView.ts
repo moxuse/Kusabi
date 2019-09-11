@@ -126,18 +126,23 @@ class RenderView {
   }
 
   public cleanPort() {
-    for (let trg of window.port.targets) {
-      this.cleanScen(trg.scene);
-      trg.scene = null;
-      this.cleanRenderTarget(trg.target);
-      const index = window.port.targets.indexOf(trg);
+    while (0 < window.port.targets.length) {
+      const len = window.port.targets.length;
+      const target = window.port.targets[len - 1];
+
+      this.cleanScen(target.scene);
+      target.scene = null;
+
+      this.cleanRenderTarget(target.target);
+      const index = window.port.targets.indexOf(target);
+      console.log(index, window.port.targets);
+
       window.port.targets.splice(index, 1);
     }
     this.cleanScen(window.port.scene);
   }
 
   cleanRenderTarget(target: WebGLRenderTarget) {
-    // console.log("clean 3", target);
     target.dispose();
     target = null;
   }
