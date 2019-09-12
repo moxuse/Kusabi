@@ -2,6 +2,7 @@ import { EventEmitter } from "typed-event-emitter";
 import io from "socket.io-client";
 import { createHash } from "crypto";
 import { Port } from "./Types";
+import { timerFlush } from "d3-timer";
 const config = require("../config.json");
 
 class Repl extends EventEmitter {
@@ -30,6 +31,7 @@ class Repl extends EventEmitter {
   response(message: ArrayBuffer) {
     const decoder = new TextDecoder("utf8");
     const encoded = decoder.decode(new Uint8Array(message));
+    timerFlush();
     this.emit(this.onResponse, encoded);
     this.execInScriptTag(encoded);
   }
