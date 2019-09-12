@@ -72,6 +72,7 @@ class RenderView {
     this.intiLight();
 
     window.addEventListener("resize", this.onResize.bind(this), false);
+    this.onResize();
     return { targets: [], scene: this.rotateScene };
   }
 
