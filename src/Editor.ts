@@ -26,6 +26,7 @@ class Editor {
       bindKey: { win: "Ctrl-r", mac: "Ctrl-r" },
       exec: this.execCompile.bind(this)
     });
+    this.editor.session.setOptions({ tabSize: 2, useSoftTabs: true });
 
     window.postError = error => {
       const post = document.querySelector("#post form .text-area");
