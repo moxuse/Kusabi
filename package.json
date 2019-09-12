@@ -12,6 +12,7 @@
   "dependencies": {
     "ace-min-noconflict": "^1.1.9",
     "child_process": "^1.0.2",
+    "d3-timer": "^1.0.9",
     "electron": "^6.0.4",
     "electron-is-dev": "^1.1.0",
     "file": "^0.2.2",
