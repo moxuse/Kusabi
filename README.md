@@ -54,15 +54,13 @@ yarn run electron
 
 Kusabi's editor window will launch.
 
-
 ## Execute Code
 
-Upper half of the window is editor view. Write code and execute whole lines by `Ctrl + R` key.
+Upper half of the window is editor view. Write code and execute whole lines by `Ctrl + E` key.
 
 ```
 add $ torus {}
 ```
-
 
 ## Test Environment
 

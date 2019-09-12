@@ -23,7 +23,7 @@ class Editor {
     this.editor.container.classList.add("editor");
     this.editor.commands.addCommand({
       name: "showKeyboardShortcuts",
-      bindKey: { win: "Ctrl-r", mac: "Ctrl-r" },
+      bindKey: { win: "Ctrl-e", mac: "Ctrl-e" },
       exec: this.execCompile.bind(this)
     });
     this.editor.session.setOptions({ tabSize: 2, useSoftTabs: true });
