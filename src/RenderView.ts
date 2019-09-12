@@ -45,7 +45,7 @@ class RenderView {
     const el = document.getElementById("renderView");
 
     this.renderer = new WebGLRenderer({ canvas: canvas, context: context });
-    this.renderer.setSize(this.width, this.height);
+    // this.renderer.setSize(this.width, this.height);
     this.renderer.setPixelRatio(window.devicePixelRatio);
     // this.renderer.shadowMapCullFace = CullFaceBack;
     this.renderer.shadowMap.enabled = true;
@@ -70,6 +70,8 @@ class RenderView {
     this.scene.add(this.rotateScene);
 
     this.intiLight();
+
+    window.addEventListener("resize", this.onResize.bind(this), false);
     return { targets: [], scene: this.rotateScene };
   }
 
@@ -148,7 +150,6 @@ class RenderView {
   }
 
   cleanScen(scene: Scene) {
-    // console.log("clean 4", scene);
     if (!scene) {
       return;
     }
@@ -164,6 +165,15 @@ class RenderView {
         scene.remove(scene.children[i]);
       }
     }
+  }
+
+  onResize(e) {
+    this.width = window.innerWidth;
+    this.height = window.innerHeight;
+    this.renderer.setPixelRatio(window.devicePixelRatio);
+    this.renderer.setSize(this.width, this.height);
+    this.camera.aspect = this.width / this.height;
+    this.camera.updateProjectionMatrix();
   }
 }
 
