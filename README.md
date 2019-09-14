@@ -69,8 +69,8 @@ Editor keybboard shortcuts
 | key      | function      |
 | -------- | ------------- |
 | Ctrl + E | Evaluate code |
-| Ctrl + S | Scave file    |
-| Ctrl + O | Open file     |
+| Cmd + S | Scave file    |
+| Cmd + O | Open file     |
 
 ## Test Environment
 
