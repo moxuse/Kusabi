@@ -62,6 +62,16 @@ Upper half of the window is editor view. Write code and execute whole lines by `
 add $ torus {}
 ```
 
+## Keyboard shortcuts
+
+Editor keybboard shortcuts
+
+| key      | function      |
+| -------- | ------------- |
+| Ctrl + E | Evaluate code |
+| Ctrl + S | Scave file    |
+| Ctrl + O | Open file     |
+
 ## Test Environment
 
 Mac OSX version :: 10.14.8

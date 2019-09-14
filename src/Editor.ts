@@ -1,15 +1,17 @@
 require("ace-min-noconflict");
 require("ace-min-noconflict/mode-javascript");
 var Range = ace.require("ace/range").Range;
-import { Port } from "./Types";
 import Repl from "./Repl";
 import RenderView from "./RenderView";
 import { TweenLite } from "gsap";
+const fs = window.require("fs");
+const { remote } = window.require("electron");
 
 class Editor {
   editor = ace.edit("editor");
   renderView: RenderView;
   repl: Repl;
+  path: string;
 
   constructor(renderView: RenderView) {
     this.repl = new Repl(renderView.port);
@@ -32,6 +34,16 @@ class Editor {
       name: "showKeyboardShortcutsSelect",
       bindKey: { win: "Ctrl-a", mac: "Ctrl-a" },
       exec: this.highlightSelection.bind(this)
+    });
+    this.editor.commands.addCommand({
+      name: "showKeyboardShortcutsOpen",
+      bindKey: { win: "Command-o", mac: "Command-o" },
+      exec: this.open.bind(this)
+    });
+    this.editor.commands.addCommand({
+      name: "showKeyboardShortcutsSave",
+      bindKey: { win: "Command-s", mac: "Command-s" },
+      exec: this.save.bind(this, false)
     });
     this.editor.session.setOptions({ tabSize: 2, useSoftTabs: true });
     this.editor.setOption("highlightActiveLine", false);
@@ -123,10 +135,74 @@ class Editor {
     post.scrollTop = post.scrollHeight;
   }
 
-  openFile(file: string) {
-    require("fs").readFile(file, "utf8", data => {
-      this.editor.setValue(data, -1);
+  load(data) {
+    this.editor.session.replace(
+      new Range(0, 0, Number.MAX_VALUE, Number.MAX_VALUE),
+      data
+    );
+  }
+
+  open() {
+    console.log("Open a file..");
+    remote.dialog.showOpenDialog(
+      remote.app.win,
+      {
+        properties: ["openFile"],
+        filters: [{ name: "Kusabi", extensions: ["purs"] }]
+      },
+      path => {
+        if (!path) {
+          console.log("Nothing to load");
+          return;
+        }
+        this.read(path);
+      }
+    );
+  }
+
+  save(quitAfter) {
+    console.log("Save a file..");
+    if (this.path) {
+      this.write(this.path, this.editor.getSession().getValue(), quitAfter);
+    } else {
+      this.saveAs(quitAfter);
+    }
+  }
+
+  saveAs(quitAfter) {
+    console.log("Save a file as..");
+    remote.dialog.showSaveDialog(loc => {
+      if (loc === undefined) {
+        return;
+      }
+      if (loc.indexOf(".purs") < 0) {
+        loc += ".purs";
+      }
+      this.write(loc, this.editor.getSession().getValue(), quitAfter);
+      this.path = loc;
     });
+  }
+
+  write(loc, data, quitAfter) {
+    console.log("Writing " + loc);
+    fs.writeFileSync(loc, data);
+
+    if (quitAfter === true) {
+      remote.app.exit();
+    }
+  }
+
+  read(loc) {
+    if (!loc) {
+      return;
+    }
+    console.log("Reading location: " + loc);
+    this.path = loc[0];
+    try {
+      this.load(fs.readFileSync(this.path, "utf8"));
+    } catch (err) {
+      console.warn(" not exist", err);
+    }
   }
 }
 

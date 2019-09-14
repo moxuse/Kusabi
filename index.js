@@ -1,5 +1,6 @@
 const config = require("./config.json");
 const app = require("electron").app;
+const electron = require("electron");
 
 const BrowserWindow = require("electron").BrowserWindow;
 const path = require("path");
@@ -168,9 +169,21 @@ app.on("window-all-closed", function() {
 app.on("ready", function() {
   mainWindow = new BrowserWindow({
     width: 1280,
-    height: 1080
+    height: 1080,
+    webPreferences: {
+      webSecurity: false,
+      nodeIntegration: true
+    }
     // titleBarStyle: "hidden"/
   });
+
+  app.toggleMenubar = function() {
+    mainWindow.setMenuBarVisibility(!mainWindow.isMenuBarVisible());
+  };
+
+  app.toggleFullscreen = function() {
+    mainWindow.setFullScreen(!mainWindow.isFullScreen());
+  };
 
   mainWindow.loadURL(
     isDev
@@ -180,5 +193,6 @@ app.on("ready", function() {
 
   mainWindow.on("closed", function() {
     mainWindow = null;
+    app.quit();
   });
 });

@@ -10,6 +10,7 @@
     "dev": "node ../parcel/packages/core/parcel-bundler/bin/cli.js -p 3000 src/index.html"
   },
   "dependencies": {
+    "@types/node": "^12.7.5",
     "ace-min-noconflict": "^1.1.9",
     "child_process": "^1.0.2",
     "d3-timer": "^1.0.9",
