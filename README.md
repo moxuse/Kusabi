@@ -74,10 +74,10 @@ Editor keybboard shortcuts
 
 ## Test Environment
 
-Mac OSX version :: 10.14.8
+Mac OSX version : 10.14.8
 
-Node.js version :: v11.6.0
+Node.js version : v11.6.0
 
-Electron version :: v6.0.3
+Electron version : v6.0.3
 
-Spago version :: v0.9.0.0
+Spago version : v0.9.0.0
