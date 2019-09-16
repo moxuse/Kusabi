@@ -9,11 +9,11 @@ import {
   AmbientLight,
   PointLight,
   Color,
-  PCFShadowMap,
   DirectionalLight,
   WebGLRenderTarget
 } from "three";
 import { WEBGL } from "three/examples/jsm/WebGL.js";
+const config = require("../config.json");
 
 class RenderView {
   private camera: PerspectiveCamera;
@@ -53,14 +53,19 @@ class RenderView {
 
     el.appendChild(this.renderer.domElement);
 
-    this.camera = new PerspectiveCamera(50, this.width / this.height, 0.1, 100);
+    this.camera = new PerspectiveCamera(
+      50,
+      this.width / this.height,
+      0.1,
+      25.0
+    );
     this.cameraForRenderTargets = new OrthographicCamera(
       -1.0,
       -1.0,
       1.0,
       1.0,
       0.1,
-      100
+      25.0
     );
     this.camera.position.set(0, 0, 5);
     this.cameraForRenderTargets.position.set(0, 0, 4);
@@ -77,22 +82,25 @@ class RenderView {
   }
 
   intiLight() {
-    const ambientLight = new AmbientLight(0x2e9992);
+    const ambientLight = new AmbientLight(config.renderView.ambientLightColor);
     ambientLight.tag = "light";
     this.scene.add(ambientLight);
 
-    var directionalLight = new DirectionalLight(0xffffff, 0.5);
+    var directionalLight = new DirectionalLight(
+      config.renderView.lightColor,
+      0.5
+    );
     directionalLight.castShadow = true;
     directionalLight.tag = "light";
     this.scene.add(directionalLight);
 
     let lights = [];
-    lights[0] = new PointLight(0xffffff, 1, 0);
+    lights[0] = new PointLight(config.renderView.lightColor, 1, 0);
     lights[0].castShadow = true;
     lights[0].shadowDarkness = 0.5;
     lights[0].shadow.camera.near = 0.001;
     lights[0].shadow.camera.far = 50;
-    lights[1] = new PointLight(0xffffff, 1, 0);
+    lights[1] = new PointLight(config.renderView.lightColor, 1, 0);
     lights[0].tag = "light";
     lights[1].tag = "light";
     lights[0].position.set(0, 25, 0);
@@ -116,8 +124,10 @@ class RenderView {
   }
 
   animate() {
-    this.rotateScene.rotation.x += 0.005;
-    this.rotateScene.rotation.y += 0.005;
+    if (config.renderView.cameraRotation) {
+      this.rotateScene.rotation.x += 0.005;
+      this.rotateScene.rotation.y += 0.005;
+    }
     if (window.port && 0 < window.port.targets.length) {
       // for (let current of window.port.targets) {
       //   current.scene.rotation.x += 0.005;

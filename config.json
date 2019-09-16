@@ -8,5 +8,10 @@
   },
   "timeout": 1000,
   "kusabiPort": 3000,
-  "replSocketPort": 9000
+  "replSocketPort": 9000,
+  "renderView": {
+    "cameraRotation": false,
+    "lightColor": "0xffffff",
+    "ambientLightColor": "0xffffff"
+  }
 }
