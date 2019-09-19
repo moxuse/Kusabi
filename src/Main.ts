@@ -9,5 +9,12 @@ new Editor(renderView);
 // global context
 window.port = renderView.port;
 window.THREE = THREE;
+
+// we should consider map three/examples codes to gloabal.
+// require("three/examples/js/shaders/BokehShader.js");
+
+/**
+ * timer for transition
+ */
 window.d3 = {};
 window.d3.timer = timer;

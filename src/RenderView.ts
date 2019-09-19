@@ -12,6 +12,7 @@ import {
   DirectionalLight,
   WebGLRenderTarget
 } from "three";
+
 import { WEBGL } from "three/examples/jsm/WebGL.js";
 const config = require("../config.json");
 
@@ -57,7 +58,7 @@ class RenderView {
       50,
       this.width / this.height,
       0.1,
-      25.0
+      10.0
     );
     this.cameraForRenderTargets = new OrthographicCamera(
       -1.0,
@@ -65,10 +66,10 @@ class RenderView {
       1.0,
       1.0,
       0.1,
-      25.0
+      10.0
     );
     this.camera.position.set(0, 0, 5);
-    this.cameraForRenderTargets.position.set(0, 0, 4);
+    this.cameraForRenderTargets.position.set(0, 0, 5);
 
     this.scene.background = new Color(0xffffff);
 
@@ -114,7 +115,11 @@ class RenderView {
       for (let current of window.port.targets) {
         this.renderer.setClearColor(new Color(0x000000), 1.0);
         this.renderer.setRenderTarget(current.target);
+        // if (current.target.tag && current.target.tag === "postEffect") {
+        // this.renderer.render(current.scene, this.cameraForRenderTargets);
+        // } else {
         this.renderer.render(current.scene, this.cameraForRenderTargets);
+        // }
       }
     }
     this.renderer.setRenderTarget(null);
