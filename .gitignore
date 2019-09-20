@@ -1,4 +1,5 @@
 .cache/
+.psc-ide-port
 output/
 node_modules
 dist
