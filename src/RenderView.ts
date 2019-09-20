@@ -45,7 +45,11 @@ class RenderView {
     const context: WebGLRenderingContext = canvas.getContext("webgl2");
     const el = document.getElementById("renderView");
 
-    this.renderer = new WebGLRenderer({ canvas: canvas, context: context });
+    this.renderer = new WebGLRenderer({
+      canvas: canvas,
+      context: context,
+      antialias: true
+    });
     // this.renderer.setSize(this.width, this.height);
     this.renderer.setPixelRatio(window.devicePixelRatio);
     // this.renderer.shadowMapCullFace = CullFaceBack;
