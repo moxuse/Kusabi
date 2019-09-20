@@ -132,10 +132,8 @@ server.on("connection", socket => {
         // psci.stdin.write(msg + "\n");
         const resultCode = fs.readFileSync(targetFile, { encodeing: "utf8" });
         socket.emit("response", resultCode);
-        cleanMain();
       })
       .catch(e => {
-        cleanMain();
         console.log("Failed compiling :: ", e);
       });
   });
