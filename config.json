@@ -12,6 +12,7 @@
   "renderView": {
     "cameraRotation": false,
     "lightColor": "0xffffff",
-    "ambientLightColor": "0xffffff"
+    "ambientLightColor": "0xffffff",
+    "postProcessing": true
   }
 }

@@ -1,4 +1,4 @@
-import { Port } from "./Types";
+import { Port, postEffectsPortProxy } from "./Types";
 import {
   Scene,
   Object3D,
@@ -12,6 +12,7 @@ import {
   DirectionalLight,
   WebGLRenderTarget
 } from "three";
+import { EffectComposer, EffectPass, RenderPass } from "postprocessing";
 
 import { WEBGL } from "three/examples/jsm/WebGL.js";
 const config = require("../config.json");
@@ -24,12 +25,15 @@ class RenderView {
   private renderer: WebGLRenderer;
   private width: number;
   private height: number;
+  private effectComposer: EffectComposer;
+  private elapse: number;
   public port: Port;
 
   constructor() {
     this.port = this.init();
     this.width = window.innerWidth;
     this.height = window.innerHeight;
+    this.elapse = 0;
     this.animate();
   }
 
@@ -83,7 +87,38 @@ class RenderView {
 
     window.addEventListener("resize", this.onResize.bind(this), false);
     this.onResize();
-    return { targets: [], scene: this.rotateScene };
+
+    const postEffects = [];
+    let postEffects_;
+    if (config.renderView.postProcessing) {
+      this.effectComposer = new EffectComposer(this.renderer);
+      // oberver for postEffects changes
+      postEffects_ = postEffectsPortProxy(postEffects, (target, length) => {
+        if (0 < length) {
+          this.updatePostProcessing();
+        }
+      });
+
+      // timer for postEffects
+      window.d3.timer(elapse => {
+        this.elapse = elapse;
+      });
+    }
+    return { targets: [], scene: this.rotateScene, postEffects: postEffects_ };
+  }
+
+  updatePostProcessing() {
+    if (!config.renderView.postProcessing) {
+      return;
+    }
+    this.port.postEffects.forEach(e => {
+      console.log("append effect pass", e);
+      const renderPass = new RenderPass(this.scene, this.camera);
+      const pass = new EffectPass(this.camera, e.effect);
+      pass.renderToScreen = e.renderToScreen;
+      this.effectComposer.addPass(renderPass);
+      this.effectComposer.addPass(pass);
+    });
   }
 
   intiLight() {
@@ -130,6 +165,10 @@ class RenderView {
 
     this.renderer.setClearColor(new Color(0x000000), 1.0);
     this.renderer.render(this.scene, this.camera);
+
+    if (config.renderView.postProcessing && this.effectComposer && window.d3) {
+      this.effectComposer.render(this.elapse);
+    }
   }
 
   animate() {
@@ -157,11 +196,12 @@ class RenderView {
 
       this.cleanRenderTarget(target.target);
       const index = window.port.targets.indexOf(target);
-      console.log(index, window.port.targets);
+      // console.log(index, window.port.targets);
 
       window.port.targets.splice(index, 1);
     }
     this.cleanScen(window.port.scene);
+    this.cleanPostProcessing();
   }
 
   cleanRenderTarget(target: WebGLRenderTarget) {
@@ -183,6 +223,22 @@ class RenderView {
         // console.log("clean 6", scene.children[i]);
         scene.children[i].geometry.dispose();
         scene.remove(scene.children[i]);
+      }
+    }
+  }
+
+  cleanPostProcessing() {
+    if (config.renderView.postProcessing) {
+      if (window.port.postEffects && window.port.postEffects.length > 0) {
+        window.port.postEffects.forEach(e => {
+          this.effectComposer.removePass(e.effect);
+          e.effect.dispose();
+          const index = window.port.postEffects.indexOf(e);
+          console.log(index, window.port.postEffects);
+
+          window.port.postEffects.splice(index, 1);
+          e.effect = null;
+        });
       }
     }
   }
