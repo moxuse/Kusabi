@@ -69,7 +69,7 @@ Editor keybboard shortcuts
 | key      | function      |
 | -------- | ------------- |
 | Ctrl + E | Evaluate code |
-| Cmd + S | Scave file    |
+| Cmd + S | Save file    |
 | Cmd + O | Open file     |
 
 ## Test Environment
