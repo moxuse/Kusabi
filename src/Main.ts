@@ -22,7 +22,13 @@ window.port = renderView.port;
 window.THREE = THREE;
 
 // we should consider map three/examples codes to gloabal.
-const { BloomEffect, NoiseEffect, BokehEffect } = require("postprocessing");
+const {
+  BloomEffect,
+  NoiseEffect,
+  BokehEffect,
+  DepthEffect
+} = require("postprocessing");
 window.THREE.BloomEffect = BloomEffect;
 window.THREE.NoiseEffect = NoiseEffect;
 window.THREE.BokehEffect = BokehEffect;
+window.THREE.DepthEffect = DepthEffect;

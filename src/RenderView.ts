@@ -152,7 +152,7 @@ class RenderView {
   render() {
     if (window.port && 0 < window.port.targets.length) {
       for (let current of window.port.targets) {
-        this.renderer.setClearColor(new Color(0x000000), 1.0);
+        this.renderer.setClearColor(new Color(0x000000), 0.0);
         this.renderer.setRenderTarget(current.target);
         // if (current.target.tag && current.target.tag === "postEffect") {
         // this.renderer.render(current.scene, this.cameraForRenderTargets);
@@ -163,7 +163,7 @@ class RenderView {
     }
     this.renderer.setRenderTarget(null);
 
-    this.renderer.setClearColor(new Color(0x000000), 1.0);
+    this.renderer.setClearColor(new Color(0x000000), 0.0);
     this.renderer.render(this.scene, this.camera);
 
     if (config.renderView.postProcessing && this.effectComposer && window.d3) {
