@@ -30,7 +30,7 @@ npm i -g spago
 
 Then execute `spago` command and make sure it works.
 
-if you got `pures not found` error, you'll need insstall purescript
+In linux environment, if you got `purs not found` error, you'll need insstall purescript.
 
 
 ```
