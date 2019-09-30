@@ -30,7 +30,15 @@ npm i -g spago
 
 Then execute `spago` command and make sure it works.
 
+if you got `pures not found` error, you'll need insstall purescript
+
+
+```
+npm i -g purescript
+```
+
 If you installed to other directory, you can customize it by `spagoCommand` setting in `config.json`.
+
 
 ## Build
 
