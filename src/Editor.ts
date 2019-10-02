@@ -6,6 +6,7 @@ import RenderView from "./RenderView";
 import { TweenLite } from "gsap";
 const fs = window.require("fs");
 const { remote } = window.require("electron");
+const config = require("../config.json");
 
 class Editor {
   editor = ace.edit("editor");
@@ -14,11 +15,19 @@ class Editor {
   path: string;
 
   constructor(renderView: RenderView) {
-    this.repl = new Repl(renderView.port);
+    this.repl = new Repl();
     this.renderView = renderView;
+    this.renderView.port.osc = this.repl.socket;
     this.init();
     this.repl.onResponse(this.onResponse.bind(this));
     this.repl.onResponseError(this.onResponseError.bind(this));
+
+    console.log(
+      "Loaded Render View\nKusbi Port :: " +
+        config.kusabiPort +
+        "\nRepl Socket Port :: " +
+        config.replSocketPort
+    );
   }
 
   init() {
@@ -65,6 +74,7 @@ class Editor {
       text += " ...";
     }
     this.renderView.cleanPort();
+    this.repl.socket.removeAllEvent();
     this.postWindow(text);
   }
 

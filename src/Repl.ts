@@ -1,31 +1,22 @@
 import { EventEmitter } from "typed-event-emitter";
-import io from "socket.io-client";
 import { createHash } from "crypto";
-import { Port } from "./Types";
 import { timerFlush } from "d3-timer";
-const config = require("../config.json");
+import WebSocket from "./WebSocket";
 
 class Repl extends EventEmitter {
-  private socket: any;
+  private socket: WebSocket;
   private lastScriptID: string;
-  public port: Port;
   onResponse = this.registerEvent<(message: string) => any>();
   onResponseError = this.registerEvent<(message: string) => any>();
 
-  constructor(port: Port) {
+  constructor() {
     super();
     this.lastScriptID = this.updateHash();
-    this.socket = io("http://localhost:" + config.replSocketPort);
+    this.socket = new WebSocket();
 
     this.socket.on("response", this.response.bind(this));
     this.socket.on("responseError", this.responseError.bind(this));
     // this.socket.on("replLoaded", this.onReplReady.bind(this));
-    console.log(
-      "Loaded Render View\nKusbi Port :: " +
-        config.kusabiPort +
-        "\nRepl Socket Port :: " +
-        config.replSocketPort
-    );
   }
 
   response(message: ArrayBuffer) {
