@@ -6,6 +6,10 @@
     "mainPath": "src/Main",
     "bundlePath": "./Bundle.purs"
   },
+  "osc": {
+    "host": "127.0.0.1",
+    "port": 5000
+  },
   "timeout": 1000,
   "kusabiPort": 3000,
   "replSocketPort": 9000,

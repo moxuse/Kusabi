@@ -5,6 +5,7 @@ export type Port = {
   scene: Scene;
   targets: Array<{ target: WebGLRenderTarget; scene: Object3D }>;
   postEffects: Array<{ effect: Effect; renderToScreen: Boolean }>;
+  osc: WebSocket;
 };
 
 export function postEffectsPortProxy(

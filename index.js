@@ -10,6 +10,7 @@ const server = io.listen(config.replSocketPort);
 const exec = require("child_process").exec;
 const fs = require("fs");
 const appendFile = require("fs").appendFile;
+const OscServer = require("node-osc").Server;
 
 let mainWindow = null;
 
@@ -113,6 +114,9 @@ const indentation = text => {
   return final;
 };
 
+/**
+ * socket io
+ */
 server.on("connection", socket => {
   console.log("client connected");
   /**
@@ -156,6 +160,15 @@ server.on("connection", socket => {
    */
 
   console.log("sthart watching Main.purs");
+
+  /**]
+   * osc listen
+   */
+  const oscServer = new OscServer(config.osc.port, config.osc.host);
+  oscServer.on("message", function(msg) {
+    // console.log("on osc msg:", msg);
+    socket.emit(msg[0], msg[1]);
+  });
 });
 
 app.on("window-all-closed", function() {
