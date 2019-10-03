@@ -78,7 +78,7 @@ Editor keybboard shortcuts
 
 | key      | function      |
 | -------- | ------------- |
-| Ctrl + E | Evaluate code |
+| Ctrl + E | Execute code |
 | Cmd + S | Save file    |
 | Cmd + O | Open file     |
 
