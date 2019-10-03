@@ -6,7 +6,6 @@ class WebSocket {
 
   constructor() {
     this.socket = io("http://localhost:" + config.replSocketPort);
-    this.on("dummy", () => {});
   }
 
   on(name, target) {
@@ -17,7 +16,7 @@ class WebSocket {
     this.socket.emit(name, value);
   }
 
-  removeAllEvent() {
+  removeAllEvents() {
     if (this.socket.io.connecting.length < 1) {
       return;
     }
@@ -33,7 +32,7 @@ class WebSocket {
           e,
           this.socket._callbacks[e]
         );
-        // console.log("removeAllEvent", e, this.socket._callbacks[e]);
+        // console.log("removeAllEvents", e, this.socket._callbacks[e]);
       }
     });
   }

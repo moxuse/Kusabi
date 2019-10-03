@@ -59,7 +59,7 @@ class Editor {
     this.editor.setOptions({
       highlightActiveLine: false,
       // theme: "ace/theme/xcode",
-      mode: "ace/mode/haskell"
+      mode: "ace/mode/haskell",
       showPrintMargin: false
     });
 
@@ -80,7 +80,7 @@ class Editor {
       text += " ...";
     }
     this.renderView.cleanPort();
-    this.repl.socket.removeAllEvent();
+    this.repl.socket.removeAllEvents();
     this.postWindow(text);
   }
 
