@@ -79,7 +79,9 @@ class RenderView {
     this.camera.position.set(0, 0, 5);
     this.cameraForRenderTargets.position.set(0, 0, 5);
 
-    this.scene.background = new Color(0xffffff);
+    this.scene.background = new Color(
+      parseInt(config.renderView.backgroundColor)
+    );
 
     this.scene.add(this.rotateScene);
 

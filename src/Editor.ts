@@ -1,5 +1,6 @@
 require("ace-min-noconflict");
-require("ace-min-noconflict/mode-javascript");
+require("ace-min-noconflict/mode-haskell");
+// require("ace-min-noconflict/theme-xcode");
 var Range = ace.require("ace/range").Range;
 import Repl from "./Repl";
 import RenderView from "./RenderView";
@@ -35,27 +36,32 @@ class Editor {
     this.editor.$blockScrolling = Infinity;
     this.editor.container.classList.add("editor");
     this.editor.commands.addCommand({
-      name: "showKeyboardShortcuts",
-      bindKey: { win: "Ctrl-e", mac: "Ctrl-e" },
+      name: "keyboardShortcutsExec",
+      bindKey: { win: "Ctrl-e", mac: "Ctrl-e", linux: "Ctrl-e" },
       exec: this.execCompile.bind(this)
     });
     this.editor.commands.addCommand({
-      name: "showKeyboardShortcutsSelect",
+      name: "keyboardShortcutsSelect",
       bindKey: { win: "Ctrl-a", mac: "Ctrl-a" },
       exec: this.highlightSelection.bind(this)
     });
     this.editor.commands.addCommand({
-      name: "showKeyboardShortcutsOpen",
-      bindKey: { win: "Command-o", mac: "Command-o" },
+      name: "keyboardShortcutsFileOpen",
+      bindKey: { win: "Command-o", mac: "Command-o", linux: "Command-o" },
       exec: this.open.bind(this)
     });
     this.editor.commands.addCommand({
-      name: "showKeyboardShortcutsSave",
-      bindKey: { win: "Command-s", mac: "Command-s" },
+      name: "keyboardShortcutsFileSave",
+      bindKey: { win: "Command-s", mac: "Command-s", linux: "Command-s" },
       exec: this.save.bind(this, false)
     });
     this.editor.session.setOptions({ tabSize: 2, useSoftTabs: true });
-    this.editor.setOption("highlightActiveLine", false);
+    this.editor.setOptions({
+      highlightActiveLine: false,
+      // theme: "ace/theme/xcode",
+      mode: "ace/mode/haskell"
+      showPrintMargin: false
+    });
 
     window.postError = error => {
       const post = document.querySelector("#post form .text-area");
