@@ -1,4 +1,10 @@
 {
+  "editor": {
+    "windowWidth": 900,
+    "windowHeight": 640,
+    "fontFamily": "Menlo, Monaco, 'Courier New', monospace",
+    "fontSize": "13px"
+  },
   "yodakaPath": "src/Yodaka",
   "spagoCommand": "spago bundle-app -n",
   "spagoOptions": {

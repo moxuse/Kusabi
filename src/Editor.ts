@@ -60,7 +60,9 @@ class Editor {
       highlightActiveLine: false,
       // theme: "ace/theme/xcode",
       mode: "ace/mode/haskell",
-      showPrintMargin: false
+      showPrintMargin: false,
+      fontFamily: config.editor.fontFamily,
+      fontSize: config.editor.fontSize
     });
 
     window.postError = error => {

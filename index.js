@@ -179,8 +179,8 @@ app.on("window-all-closed", function() {
 
 app.on("ready", function() {
   mainWindow = new BrowserWindow({
-    width: 1280,
-    height: 1080,
+    width: config.editor.windowWidth,
+    height: config.editor.windowHeight,
     webPreferences: {
       webSecurity: false,
       nodeIntegration: true
