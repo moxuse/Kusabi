@@ -41,18 +41,13 @@ class Editor {
       exec: this.execCompile.bind(this)
     });
     this.editor.commands.addCommand({
-      name: "keyboardShortcutsSelect",
-      bindKey: { win: "Ctrl-a", mac: "Ctrl-a", linux: "Ctrl-a" },
-      exec: this.highlightSelection.bind(this)
-    });
-    this.editor.commands.addCommand({
       name: "keyboardShortcutsFileOpen",
-      bindKey: { win: "Command-o", mac: "Command-o", linux: "Command-o" },
+      bindKey: { win: "Ctrl-o", mac: "Command-o", linux: "Ctrl-o" },
       exec: this.open.bind(this)
     });
     this.editor.commands.addCommand({
       name: "keyboardShortcutsFileSave",
-      bindKey: { win: "Command-s", mac: "Command-s", linux: "Command-s" },
+      bindKey: { win: "Ctrl-s", mac: "Command-s", linux: "Ctrl-s" },
       exec: this.save.bind(this, false)
     });
     this.editor.session.setOptions({ tabSize: 2, useSoftTabs: true });
