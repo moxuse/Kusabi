@@ -42,7 +42,7 @@ class Editor {
     });
     this.editor.commands.addCommand({
       name: "keyboardShortcutsSelect",
-      bindKey: { win: "Ctrl-a", mac: "Ctrl-a" },
+      bindKey: { win: "Ctrl-a", mac: "Ctrl-a", linux: "Ctrl-a" },
       exec: this.highlightSelection.bind(this)
     });
     this.editor.commands.addCommand({
