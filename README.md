@@ -40,6 +40,8 @@ npm i -g purescript
 If you installed to other directory, you can customize it by `spagoCommand` setting in `config.json`.
 
 
+if you got other probrems about instaraion, [official document](https://github.com/spacchetti/spago#installation) will helps you.
+
 ## Build
 
 ```
