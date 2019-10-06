@@ -54,6 +54,7 @@ class RenderView {
       context: context,
       antialias: true
     });
+    this.renderer.shadowMapEnabled = true;
     // this.renderer.setSize(this.width, this.height);
     this.renderer.setPixelRatio(window.devicePixelRatio);
     // this.renderer.shadowMapCullFace = CullFaceBack;
@@ -106,7 +107,12 @@ class RenderView {
         this.elapse = elapse;
       });
     }
-    return { targets: [], scene: this.rotateScene, postEffects: postEffects_ };
+    return {
+      targets: [],
+      scene: this.rotateScene,
+      postEffects: postEffects_,
+      onRender: []
+    };
   }
 
   updatePostProcessing() {
@@ -171,6 +177,12 @@ class RenderView {
     if (config.renderView.postProcessing && this.effectComposer && window.d3) {
       this.effectComposer.render(this.elapse);
     }
+
+    if (window.port && window.port.onRender) {
+      window.port.onRender.forEach(o => {
+        o();
+      });
+    }
   }
 
   animate() {
@@ -204,6 +216,7 @@ class RenderView {
     }
     this.cleanScen(window.port.scene);
     this.cleanPostProcessing();
+    this.clearOnRender();
   }
 
   cleanRenderTarget(target: WebGLRenderTarget) {
@@ -242,6 +255,16 @@ class RenderView {
           e.effect = null;
         });
       }
+    }
+  }
+
+  clearOnRender() {
+    if (window.port.onRender) {
+      window.port.onRender.forEach(o => {
+        const index = window.port.onRender.indexOf(o);
+        window.port.onRender.splice(index, 1);
+        o = null;
+      });
     }
   }
 
