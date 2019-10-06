@@ -76,11 +76,11 @@ add $ torus {}
 
 Editor keybboard shortcuts
 
-| key      | function      |
-| -------- | ------------- |
-| Ctrl + E | Execute code |
-| Cmd + S | Save file    |
-| Cmd + O | Open file     |
+| key (win/linux) | key (Mac)      | function      |
+| -------- | -------- | ------------- |
+| Ctrl + E | Ctrl + E | Execute code |
+| Ctrl + S | Cmd + S | Save file    |
+| Ctrl + O | Cmd + O | Open file     |
 
 ## Test Environment
 
