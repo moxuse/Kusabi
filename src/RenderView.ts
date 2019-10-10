@@ -160,12 +160,17 @@ class RenderView {
   render() {
     if (window.port && 0 < window.port.targets.length) {
       for (let current of window.port.targets) {
-        this.renderer.setClearColor(new Color(0x000000), 0.0);
-        this.renderer.setRenderTarget(current.target);
         // if (current.target.tag && current.target.tag === "postEffect") {
         // this.renderer.render(current.scene, this.cameraForRenderTargets);
         // } else {
-        this.renderer.render(current.scene, this.cameraForRenderTargets);
+        if (!current.skip) {
+          this.renderer.setClearColor(new Color(0x000000), 0.0);
+          this.renderer.setRenderTarget(current.target);
+          this.renderer.render(current.scene, this.cameraForRenderTargets);
+        }
+        // } else {
+        // console.log(current.target.texture.uuid);
+        // }
         // }
       }
     }
@@ -249,7 +254,7 @@ class RenderView {
           this.effectComposer.removePass(e.effect);
           e.effect.dispose();
           const index = window.port.postEffects.indexOf(e);
-          console.log(index, window.port.postEffects);
+          // console.log(index, window.port.postEffects);
 
           window.port.postEffects.splice(index, 1);
           e.effect = null;
@@ -260,11 +265,12 @@ class RenderView {
 
   clearOnRender() {
     if (window.port.onRender) {
+      // console.log(window.port.onRender, window.port.onRender.length);
       window.port.onRender.forEach(o => {
         const index = window.port.onRender.indexOf(o);
-        window.port.onRender.splice(index, 1);
-        o = null;
+        window.port.onRender[index] = null;
       });
+      window.port.onRender = [];
     }
   }
 

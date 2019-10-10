@@ -3,7 +3,12 @@ import { Effect } from "postprocessing";
 
 export type Port = {
   scene: Scene;
-  targets: Array<{ target: WebGLRenderTarget; scene: Object3D }>;
+  targets: Array<{
+    id: String;
+    target: WebGLRenderTarget;
+    scene: Object3D;
+    skip: Boolean;
+  }>;
   postEffects: Array<{ effect: Effect; renderToScreen: Boolean }>;
   onRender: Array<any>;
   osc: WebSocket;
