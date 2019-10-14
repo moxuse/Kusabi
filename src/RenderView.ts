@@ -95,7 +95,7 @@ class RenderView {
     let postEffects_;
     if (config.renderView.postProcessing) {
       this.effectComposer = new EffectComposer(this.renderer);
-      // oberver for postEffects changes
+      // observer for postEffects changes
       postEffects_ = postEffectsPortProxy(postEffects, (target, length) => {
         if (0 < length) {
           this.updatePostProcessing();
