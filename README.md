@@ -76,7 +76,7 @@ add $ torus {}
 
 ## Keyboard shortcuts
 
-Editor keybboard shortcuts
+Editor keyboard shortcuts
 
 | key (win/linux) | key (Mac)      | function      |
 | -------- | -------- | ------------- |
