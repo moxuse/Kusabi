@@ -9,6 +9,7 @@ import {
   AmbientLight,
   PointLight,
   Color,
+  Vector3,
   DirectionalLight,
   WebGLRenderTarget
 } from "three";
@@ -67,7 +68,7 @@ class RenderView {
       50,
       this.width / this.height,
       0.1,
-      10.0
+      20.0
     );
     this.cameraForRenderTargets = new OrthographicCamera(
       -1.0,
@@ -77,8 +78,9 @@ class RenderView {
       0.1,
       10.0
     );
-    this.camera.position.set(0, 0, 5);
+    this.camera.position.set(0, 0.45, 5);
     this.cameraForRenderTargets.position.set(0, 0, 5);
+    this.camera.lookAt(new Vector3(0.0, 0.0, 0.0));
 
     this.scene.background = new Color(
       parseInt(config.renderView.backgroundColor)
@@ -185,7 +187,7 @@ class RenderView {
 
     if (window.port && window.port.onRender) {
       window.port.onRender.forEach(o => {
-        o();
+        o(this.renderer, this.scene);
       });
     }
   }
