@@ -253,14 +253,17 @@ class RenderView {
     if (config.renderView.postProcessing) {
       if (window.port.postEffects && window.port.postEffects.length > 0) {
         window.port.postEffects.forEach(e => {
-          this.effectComposer.removePass(e.effect);
           e.effect.dispose();
           const index = window.port.postEffects.indexOf(e);
-          // console.log(index, window.port.postEffects);
 
           window.port.postEffects.splice(index, 1);
+          // console.log(index, window.port.postEffects, this.effectComposer);
           e.effect = null;
         });
+        this.effectComposer.passes.forEach(p => {
+          this.effectComposer.removePass(p);
+        });
+        this.effectComposer.reset();
       }
     }
   }
