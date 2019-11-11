@@ -24,20 +24,18 @@ git clone https://github.com/moxuse/Kusabi.git --recursive
 
 Kusabi depends PureScript package managment system on [Spago](https://github.com/spacchetti/spago) and its build system.
 
-Spago could install with npm.
+PureScript and Spago could install with npm.
+
+
+```
+npm i -g purescript
+```
 
 ```
 npm i -g spago
 ```
 
 Then execute `spago` command and make sure it works.
-
-In linux environment, if you got `purs not found` error, you'll need insstall purescript.
-
-
-```
-npm i -g purescript
-```
 
 If you installed to other directory, you can customize it by `spagoCommand` setting in `config.json`.
 
