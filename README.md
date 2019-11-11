@@ -49,19 +49,19 @@ if you got other probrems about installation, [official document](https://github
 ```
 cd /where/you/cloned/kusabi
 
-yarn
+npm install
 ```
 
 ## Run
 
 ```
-yarn run start
+npm run start
 ```
 
 in another command prompt,
 
 ```
-yarn run electron
+npm run electron
 ```
 
 Kusabi's editor window will launch.
