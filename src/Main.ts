@@ -32,3 +32,5 @@ window.THREE.BloomEffect = BloomEffect;
 window.THREE.NoiseEffect = NoiseEffect;
 window.THREE.BokehEffect = BokehEffect;
 window.THREE.DepthEffect = DepthEffect;
+
+console.log('three version ::',  THREE.REVISION);
