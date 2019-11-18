@@ -11,5 +11,9 @@ add =<< uOsc "/x" "density" <$> noisePlane
   
   ` sendMsg ["/x", 0.25] `
   
-  in sender application. 
+  in sender application.
+    
+  Using 'apply operator' function (|>), You can write like this.
 -}
+
+add =<< noisePlane |> uOsc "/x" "density"
