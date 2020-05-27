@@ -7,7 +7,9 @@ const path = require("path");
 const isDev = require("electron-is-dev");
 const io = require("socket.io");
 const server = io.listen(config.replSocketPort);
-const exec = require("child_process").exec;
+const util = require('util');
+const childProcess = require("child_process");
+const exec = util.promisify(childProcess.exec);
 const fs = require("fs");
 const appendFile = require("fs").appendFile;
 const OscServer = require("node-osc").Server;
@@ -56,8 +58,8 @@ try {
 // };
 
 console.log("Yodaka dir", path.join(process.cwd(), "/" + config.yodakaPath));
-const bundleCompileFile = code => {
-  prapareFile();
+const bundleCompileFile = async code => {
+  await prapareFile();
   const indented = indentation(code);
   const addingCode = indented + "\n";
   appendFile(mainFile, addingCode, err => {
@@ -66,20 +68,26 @@ const bundleCompileFile = code => {
   });
 };
 
-const prapareFile = () => {
+const prapareFile = async () => {
+  return new Promise (resolve => {
   exec("cat " + bundleFile + " >> " + mainFile, (error, stdout, stderr) => {
     if (error) {
       console.log("Write File Error", error);
     }
+    resolve();
+    });
   });
 };
 
-const cleanMain = () => {
-  exec('echo " " > ' + mainFile, (error, stdout, stderr) => {
+const cleanMain = async () => {
+  new Promise (resolve => {
+   exec('echo " " > ' + mainFile, (error, stdout, stderr) => {
     if (error) {
       console.log("Write File Error", error);
       return;
     }
+    resolve();
+    });
   });
 };
 
@@ -128,8 +136,8 @@ server.on("connection", socket => {
    * see: https://github.com/purescript/purescript/issues/934
    */
 
-  socket.on("repl", code => {
-    cleanMain();
+  socket.on("repl", async code => {
+    await cleanMain();
     console.log("build psci > ", code);
     doCompile(socket, code)
       .then(() => {

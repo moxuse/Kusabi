@@ -21,7 +21,7 @@ new Editor(renderView);
 window.port = renderView.port;
 window.THREE = THREE;
 
-// we should consider map three/examples codes to gloabal.
+// we should consider map three/examples codes to global. a compromise code.
 const {
   BloomEffect,
   NoiseEffect,
@@ -33,4 +33,4 @@ window.THREE.NoiseEffect = NoiseEffect;
 window.THREE.BokehEffect = BokehEffect;
 window.THREE.DepthEffect = DepthEffect;
 
-console.log('three version ::',  THREE.REVISION);
+console.log("three version ::", THREE.REVISION);
