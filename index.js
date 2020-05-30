@@ -1,6 +1,7 @@
 const config = require("./config.json");
 const app = require("electron").app;
 const electron = require("electron");
+const Menu = electron.Menu;
 
 const BrowserWindow = require("electron").BrowserWindow;
 const path = require("path");
@@ -13,6 +14,7 @@ const exec = util.promisify(childProcess.exec);
 const fs = require("fs");
 const appendFile = require("fs").appendFile;
 const OscServer = require("node-osc").Server;
+
 
 let mainWindow = null;
 
@@ -179,6 +181,44 @@ server.on("connection", socket => {
   });
 });
 
+const exportWeb = () => {
+  exec("npm run export", (error, stdout, stderr) => {
+    if (error) {
+      socket.emit("Error", "Web Exporting Error.");
+    }
+    console.log("Exported..");
+    if (process.platform==='darwin') { exec("open ./dist") }
+  });
+}
+
+/**
+ * menu settings
+ */
+const initWindowMenu = () => {
+  const template = [
+      {
+          label: 'Menu',
+          submenu: [
+              {
+                  label: 'Quit',
+                  click () { app.quit(); }
+              }
+          ]
+      },
+      {
+        label: 'File',
+        submenu: [
+            {
+                label: 'Export',
+                click () { exportWeb() }
+            }
+        ]
+    }
+  ]
+  const menu = Menu.buildFromTemplate(template);
+  Menu.setApplicationMenu(menu);
+}
+
 app.on("window-all-closed", function() {
   if (process.platform != "darwin") {
     app.quit();
@@ -195,6 +235,8 @@ app.on("ready", function() {
     }
     // titleBarStyle: "hidden"/
   });
+
+  initWindowMenu();
 
   app.toggleMenubar = function() {
     mainWindow.setMenuBarVisibility(!mainWindow.isMenuBarVisible());

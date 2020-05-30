@@ -28,18 +28,22 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV != "export") {
   import("three").then(THREE => {
     window.THREE = THREE;
     console.log("three version ::", THREE.REVISION);
-  }) 
-}
+    // we should consider map three/examples codes to global. a compromise code.    
+    import("postprocessing").then(({
+      BloomEffect,
+      NoiseEffect,
+      BokehEffect,
+      DepthEffect
+    }) => {
+      
+      // TODO : didnt import web export mode
 
-// we should consider map three/examples codes to global. a compromise code.
-const {
-  BloomEffect,
-  NoiseEffect,
-  BokehEffect,
-  DepthEffect
-} = require("postprocessing");
-window.THREE.BloomEffect = BloomEffect;
-window.THREE.NoiseEffect = NoiseEffect;
-window.THREE.BokehEffect = BokehEffect;
-window.THREE.DepthEffect = DepthEffect;
+      window.THREE.BloomEffect = BloomEffect;
+      window.THREE.NoiseEffect = NoiseEffect;
+      window.THREE.BokehEffect = BokehEffect;
+      window.THREE.DepthEffect = DepthEffect;
+    })
+
+  })
+}
 
