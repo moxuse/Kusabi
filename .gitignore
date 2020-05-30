@@ -1,6 +1,7 @@
 .cache/
 .psc-ide-port
 .python-version
+.purs
 output/
 node_modules
 dist
