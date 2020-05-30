@@ -82,12 +82,22 @@ Editor keyboard shortcuts
 | Ctrl + S | Cmd + S | Save file    |
 | Ctrl + O | Cmd + O | Open file     |
 
+## Web Export
+
+You can export bundled JavaScript code and HTML from code last you compiled.
+
+Once compile current code and choose Menu `File >> Export`.
+
+`dist` directory will appear and bundled code to `bundle.js` except threejs module (if you want to run and watch result rapidly, you can commentout `<script>` tag which will load threejs from cdn resource in headder)
+
+
+
 ## Test Environment
 
-Mac OSX version : 10.14.8
+Mac OSX version : 10.15.4
 
-Node.js version : v11.6.0
+Node.js version : v14.3.0
 
-Electron version : v6.0.3
+Electron version : v6.0.4
 
-Spago version : v0.9.0.0
+Spago version : v0.15.2
