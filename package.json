@@ -24,7 +24,7 @@
     "node-osc": "^4.1.1",
     "postprocessing": "^6.7.0",
     "purty": "^4.5.1",
-    "socket.io": "^2.2.0",
+    "socket.io": "^2.4.0",
     "socket.io-client": "^2.2.0",
     "three": "^0.110.0",
     "typed-event-emitter": "^2.0.0"
