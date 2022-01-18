@@ -21,7 +21,7 @@
   "replSocketPort": 9000,
   "renderView": {
     "cameraRotation": false,
-    "backgroundColor": "0xffffff",
+    "backgroundColor": "0x8844ff",
     "lightColor": "0xffffff",
     "ambientLightColor": "0xffffff",
     "postProcessing": true
