@@ -30,7 +30,7 @@
     "typed-event-emitter": "^2.0.0"
   },
   "devDependencies": {
-    "parcel": "=1.12.0",
+    "parcel": "=2.8.2",
     "typescript": "^3.5.3",
     "uglify-js": "^3.9.4"
   }
